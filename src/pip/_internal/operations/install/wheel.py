@@ -472,6 +472,7 @@ def _install_wheel(
     ) -> None:
         """Map archive RECORD paths to installation RECORD paths."""
         newpath = _fs_to_record_path(destfile, lib_dir)
+        print(f"\t-> {destfile}")
         installed[srcfile] = newpath
         if modified:
             changed.add(_fs_to_record_path(destfile))
@@ -586,8 +587,10 @@ def _install_wheel(
     files = chain(files, script_scheme_files)
 
     for file in files:
-        file.save()
         record_installed(file.src_record_path, file.dest_path, file.changed)
+
+    # TODO: remove this?
+    return
 
     def pyc_source_file_paths() -> Iterator[str]:
         # We de-duplicate installation paths, since there can be overlap (e.g.
